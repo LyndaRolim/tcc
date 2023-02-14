@@ -1,0 +1,121 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: #edf5ff !important;
+  height: 100%;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+.box{
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity))!important;
+  border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important;
+  /*box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;*/
+  border-radius: var(--bs-border-radius)!important;
+  /*margin: 3em;*/
+  width: 100%;
+}
+
+.box-header{
+  font-weight: bold;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: larger;
+  border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important;
+}
+
+.box-body{
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.box-body div{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.box-footer{
+  border-top: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.box-body div label{
+  text-transform: uppercase;
+}
+
+.box-body div input{
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: .375rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.login-box{
+  margin-top: 25vh !important;
+}
+
+.w-175px{
+  width: 175px;
+}
+
+.loading{
+  background-color: black;
+  opacity: 0.5;
+  position:relative;
+}
+
+.collapseMenu{
+  width: 25%;
+}
+
+.h-97{
+  height: 91vh!important;
+}
+
+a{
+  text-decoration: none;
+  text-transform: capitalize;
+}
+
+.menu{
+  top: 60px;
+  text-transform: capitalize;
+}
+
+.textarea-200px{
+  height: 200px;
+}
+
+.h-350px{
+  max-height: 350px;
+}
+
+.h-680px{
+  max-height: 680px;
+}
+
+.h-110px{
+  height: 110px !important;
+}
+
+.w-175px{
+  width: 175px !important;
+}
