@@ -1,16 +1,18 @@
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { UserContext } from '../Contexts/UserContext/UserContext';
 
 export default function Login() {
     const navigate = useRouter().push;
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    let usuario = null;
+    const { setUsuario } = useContext(UserContext);
 
     useEffect(() => {
-        if (window.localStorage.getItem("user") !== "null" && window.localStorage.getItem("user") !== null) {
+        if (localStorage.getItem("user") !== "null" && localStorage.getItem("user") !== null) {
+            setUsuario(JSON.parse(localStorage.getItem("user")))
             toast.success("Usuário logado com sucesso.");
             setTimeout(() => {
                 navigate("/home");
@@ -38,7 +40,7 @@ export default function Login() {
                     .then(data => {
                         if (data !== "" && data !== null) {
                             window.localStorage.setItem("user", JSON.stringify(data));
-                            usuario = data;
+                            setUsuario(data)
                         }
                     })
 
@@ -48,11 +50,10 @@ export default function Login() {
                     error: "Usuário não encontrado."
                 })
                 .then(() => {
-                    if (usuario !== null) {
-                        setTimeout(() => {
-                            navigate("/home");
-                        }, 500);
-                    }
+                    setTimeout(() => {
+                        navigate("/home");
+                    }, 500);
+
                 })
         }
     }

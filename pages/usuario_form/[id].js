@@ -11,6 +11,9 @@ const CadastroUsuario = () => {
     const [senha_repetida, setSenhaRepetida] = useState("");
     const [email, setEmail] = useState("");
     const { id } = route.query;
+    const [acessoAtual, setAcessoAtual] = useState("");
+    const acesso = ["Diretoria", "Coordenador", "Recrutador", "Assistente"];
+    console.log(acessoAtual)
 
     useEffect(() => {
         carregaUsuario();
@@ -26,6 +29,7 @@ const CadastroUsuario = () => {
                     setEmail(usuario.email);
                     setSenha(usuario.senha);
                     setSenhaRepetida(usuario.senha);
+                    setAcessoAtual(usuario.acesso);
                 })
         }
     }
@@ -42,7 +46,8 @@ const CadastroUsuario = () => {
                         id: id,
                         nome: nome,
                         senha: senha,
-                        email: email
+                        email: email,
+                        acesso: acessoAtual
                     })
                 ,{
                     pending: "Enviado informações.",
@@ -61,6 +66,9 @@ const CadastroUsuario = () => {
 
         if(nome === ""){
             erro = "Insira o nome. ";
+        }
+        if (acessoAtual === "") {
+            erro = "Selecione o tipo de acesso. ";
         }
         if(email === ""){
             erro += "Informe o email. ";
@@ -103,6 +111,19 @@ const CadastroUsuario = () => {
                     <label>Repita a Senha</label>
                     <input value={senha_repetida} onChange={e=>{setSenhaRepetida(e.target.value)}} type='password' />
                 </div>
+
+                <div className='col pt-3'>
+                    <label>Tipo de acesso</label>
+                    <select className="form-control" onChange={e => { setAcessoAtual(e.target.value) }} value={acessoAtual}>
+                        <option value="">Selecione</option>
+                        {acesso.map(item => {
+                            return (
+                                <option value={item}>{item}</option>
+                            )
+                        })}
+                    </select>
+                </div>
+
             </div>
             <div className='box-footer'>
                 <button className='btn btn-primary' onClick={Salvar}>Salvar</button>

@@ -1,8 +1,9 @@
 import { FaArrowUp, FaEdit, FaTrash } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { UserContext } from '../../Contexts/UserContext/UserContext';
 
 function Usuarios() {
 
@@ -11,9 +12,11 @@ function Usuarios() {
     const [busca, setBusca] = useState("");
     const buscaLower = busca?.toLowerCase();
     const usuariosFiltrados = usuarios.filter((usuario) => usuario.nome?.toLowerCase().includes(buscaLower) || usuario.email?.toLowerCase().includes(buscaLower));
+    const { validaAcesso } = useContext(UserContext);
 
     useEffect(() => {
         preencherLista();
+        validaAcesso(["Diretoria", "Coordenador", "Assistente"]);
     },[])
     
     async function preencherLista(){
@@ -46,7 +49,7 @@ function Usuarios() {
     function listaUsuario(){
         return(
             <div className="col-12 mt-3 overflow-auto">
-                <div class="d-flex">
+                <div className="d-flex">
                     <div className='col'>Nome</div>
                     <div className='col'>Email</div>
                     <div className='col-2'>Status</div>

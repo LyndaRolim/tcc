@@ -2,33 +2,20 @@ import { Collapse } from "react-bootstrap"
 import { useContext, useEffect, useState } from "react";
 import { MenuContext } from "../../Contexts/MenuContext/MenuContext";
 import { useRouter } from 'next/router';
-import Link from 'next/link'
+import { UserContext } from "../../Contexts/UserContext/UserContext";
 
 const Menu = () => {
     const { open } = useContext(MenuContext);
+    const {routeActive, setRouteActive } = useContext(UserContext);
     const router = useRouter();
     const routes = ["/home", "/usuarios", "/empresas", "/candidatos", "/vagas"];
-    const [routeActive, setRouteActive] = useState("" + router.pathname);
-    let mostrar = false;
-
-    if (typeof window !== 'undefined') {
-        if (window.localStorage.getItem("user") !== "null" || window.localStorage.getItem("user") !== null) {
-            if (router.pathname !== "/") {
-                mostrar = true;
-            } else {
-                mostrar = false;
-            }
-        }
-    }
-
 
     useEffect(() => {
         selecionaActive();
-    });
+    },[routeActive]);
 
     function selecionaActive() {
         let lista = document.getElementsByTagName("li");
-        setRouteActive(router.pathname);
 
         for (let i = 0; i < lista.length; i++) {
             let item_atual = '/' + lista[i].innerHTML.replace(" ", "_");
@@ -69,7 +56,7 @@ const Menu = () => {
         );
     };
 
-    if (open && mostrar) {
+    if (open) {
         return (retornoMenu());
     } else {
         return (

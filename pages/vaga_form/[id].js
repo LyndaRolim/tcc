@@ -131,7 +131,7 @@ const CadastroVagas = () => {
 
                 <div className='col-12 pt-3'>
                     <label>Descrição</label>
-                    <textarea value={obs} onChange={e=>{setObs(e.target.value)}} class="form-control textarea-200px">
+                    <textarea value={obs} onChange={e=>{setObs(e.target.value)}} className="form-control textarea-200px">
                     </textarea>
                 </div>
             </div>
