@@ -1,9 +1,10 @@
 import { FaArrowUp, FaEdit, FaTrash } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Loading from '../../Components/Loading/Loading';
+import { UserContext } from '../../Contexts/UserContext/UserContext';
 
 const Candidatos = () => {
     const navigate = useRouter().push;
@@ -12,9 +13,12 @@ const Candidatos = () => {
     const [loading, setLoading] = useState(true);
     const buscaLower = busca?.toLowerCase();
     const candidatosFiltrados = candidatos.filter((candidato) => candidato.nome?.toLowerCase().includes(buscaLower) || candidato.email?.toLowerCase().includes(buscaLower) || candidato.formacao?.toLowerCase().includes(buscaLower));
+    const { validaAcesso } = useContext(UserContext);
+
 
     useEffect(() => {
         preencherLista();
+        validaAcesso(["Diretoria", "Coordenador", "Recrutador"]);
     },[])
 
     async function preencherLista(){
@@ -46,7 +50,7 @@ const Candidatos = () => {
     function listaCandidatos(){
         return(
             <div className="col-12 mt-3">
-                <div class="d-flex">
+                <div className="d-flex">
                     <div className='col'>Nome</div>
                     <div className='col'>Email</div>
                     <div className='col'>Formação</div>

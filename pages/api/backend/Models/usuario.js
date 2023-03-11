@@ -27,6 +27,10 @@ const UsuarioSchema = new mongoose.Schema({
     esqueci_senha_token: {
         type: String,
     },
+    acesso:{
+        type: String,
+        required: false,
+    },
     createdAt: {
         type: Date,
         default: Date.now,

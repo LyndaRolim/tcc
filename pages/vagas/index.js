@@ -1,8 +1,9 @@
 import { FaArrowUp, FaEdit, FaTrash, FaDoorOpen } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext} from 'react';
 import { useRouter } from 'next/router';
+import { UserContext } from '../../Contexts/UserContext/UserContext';
 
 const Vagas = () => {
     const navigate = useRouter().push;
@@ -10,9 +11,11 @@ const Vagas = () => {
     const [busca, setBusca] = useState("");
     const buscaLower = busca?.toLowerCase();
     const vagasFiltrados = vagas.filter((vaga) => vaga.cargo?.toLowerCase().includes(buscaLower) || vaga.empresa.nome?.toLowerCase().includes(buscaLower));
+    const { validaAcesso } = useContext(UserContext);
 
     useEffect(() => {
         preencherLista();
+        validaAcesso(["Diretoria", "Coordenador", "Recrutador"]);
     },[])
 
     async function preencherLista(){
@@ -43,7 +46,7 @@ const Vagas = () => {
     function listaVagas(){
         return(
             <div className="col-12 mt-3 overflow-auto">
-                <div class="d-flex">
+                <div className="d-flex">
                     <div className='col'>Empresa</div>
                     <div className='col'>Cargo</div>
                     <div className='col'>Data</div>
@@ -73,7 +76,7 @@ const Vagas = () => {
                                     <div className="col"><button className='btn' onClick={()=>{navigate("/vaga_form/"+vaga._id)}}><FaEdit  /></button></div>
                                     {vaga.status?
                                         <div className='col'>
-                                            <button class="btn" onClick={()=>{navigate("/candidato_vaga/"+vaga._id)}}>
+                                            <button className="btn" onClick={()=>{navigate("/candidato_vaga/"+vaga._id)}}>
                                                 <FaDoorOpen />
                                             </button>
                                         </div>

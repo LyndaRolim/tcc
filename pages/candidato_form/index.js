@@ -155,7 +155,7 @@ const CadastroCandidatos = () => {
 
                 <div className='col-11 pt-3'>
                     <label>Curriculo</label>
-                    <input type="file" onChange={e=>{setCurriculo(e.target.files)}} class="form-control" accept="application/pdf"></input>
+                    <input type="file" onChange={e=>{setCurriculo(e.target.files)}} className="form-control" accept="application/pdf"></input>
                 </div>
                 <div className='col-1 pt-3'>
                     {curriculoBase64 !== ""?
@@ -169,7 +169,7 @@ const CadastroCandidatos = () => {
 
                 <div className='col-12 pt-3'>
                     <label>Observações</label>
-                    <textarea value={obs} onChange={e=>{setObs(e.target.value)}} class="form-control">
+                    <textarea value={obs} onChange={e=>{setObs(e.target.value)}} className="form-control">
                     </textarea>
                 </div>
             </div>

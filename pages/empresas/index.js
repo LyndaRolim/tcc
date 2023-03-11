@@ -1,8 +1,9 @@
 import { FaArrowUp, FaEdit, FaTrash } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { UserContext } from '../../Contexts/UserContext/UserContext';
 
 const Empresas = () => {
     const navigate = useRouter().push;
@@ -10,9 +11,11 @@ const Empresas = () => {
     const [busca, setBusca] = useState("");
     const buscaLower = busca?.toLowerCase();
     const empresasFiltrados = empresas.filter((empresa) => empresa.nome?.toLowerCase().includes(buscaLower) || empresa.email?.toLowerCase().includes(buscaLower));
+    const { validaAcesso } = useContext(UserContext);
 
     useEffect(() => {
         preencherLista();
+        validaAcesso(["Diretoria", "Coordenador", "Assistente"]);
     },[])
 
     async function preencherLista(){
@@ -43,7 +46,7 @@ const Empresas = () => {
     function listaEmpresas(){
         return(
             <div className="col-12 mt-3 overflow-auto">
-                <div class="d-flex">
+                <div className="d-flex">
                     <div className='col'>Nome</div>
                     <div className='col'>Email</div>
                     <div className='col-2'>Status</div>

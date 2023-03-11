@@ -91,7 +91,7 @@ const CadastroCandidatoVaga = () => {
     function listaCandidatoVaga(){
         return(
             <div className="col-12 mt-3 h-350px overflow-auto">
-                <div class="d-flex">
+                <div className="d-flex">
                     <div className='col'>Nome</div>
                     <div className='col'>Email</div>
                     <div className='col'>Formação</div>
@@ -132,7 +132,7 @@ const CadastroCandidatoVaga = () => {
     function listaSelecionados(){
         return(
             <div className="col-12 mt-3 h-350px overflow-auto">
-                <div class="d-flex">
+                <div className="d-flex">
                     <div className='col'>Nome</div>
                     <div className='col'>Email</div>
                     <div className='col'>Formação</div>
