@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { UserContext } from '../../Contexts/UserContext/UserContext';
 
 const CadastroEmpresas = () => {
     const navigate = useRouter().push;
@@ -12,9 +13,11 @@ const CadastroEmpresas = () => {
     const [telefone, setTelefone] = useState("");
     const [obs, setObs] = useState("");
     const { id } = route.query;
+    const { validaAcesso } = useContext(UserContext);
 
     useEffect(() => {
         carregaEmpresa(); 
+        validaAcesso(["Diretoria", "Coordenador", "Assistente"]);
     },[])
 
     function carregaEmpresa(){

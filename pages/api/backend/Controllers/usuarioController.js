@@ -8,9 +8,13 @@ exports.login = async (req,res) => {
             senha: md5(req.body.senha)
         });
         if(usuario){
-            return res.status(200).send(usuario);
+            if (usuario.status){
+                return res.status(200).send(usuario);
+            }else{
+                return res.status(400).send({erro: "Usuário inativo."});
+            }
         }else{
-            return res.status(400).send({erro: "Usuário não encontrado."});
+            return res.status(400).send({erro: "Usuário não encontrado ou senha inválida."});
         }
     }catch(err){
         return res.status(400).send({erro: ''+err });

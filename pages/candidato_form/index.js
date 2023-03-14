@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { FaDownload } from 'react-icons/fa';
+import { UserContext } from '../../Contexts/UserContext/UserContext';
 
 const CadastroCandidatos = () => {
     const navigate = useRouter().push;
@@ -16,6 +17,12 @@ const CadastroCandidatos = () => {
     const [curriculo, setCurriculo] = useState([]);
     const [curriculoBase64, setCurriculoBase64] = useState("");
     const [cpf, setCpf] = useState("");
+    const { validaAcesso } = useContext(UserContext);
+
+    useEffect(() => {
+        Salvar();
+        validaAcesso(["Diretoria", "Coordenador", "Recrutador"]);
+    },[])
 
     async function Salvar(){
         if(temErro() !== ""){
