@@ -62,24 +62,25 @@ const Home = () => {
                 </>
                 : null}
 
-
-            <div className="box col-md-5 col-xs-12 mt-3 m-auto shadow">
-                <div className='text-center'>
-                    <div className='fs-5 border-bottom'>Empresas</div>
-                    {loading ?
-                        <Loading className="rounded-bottom" />
-                        :
-                        <>
-                            <div>Ativas / Inativas</div>
-                            <div className="fs-4 text-primary">
-                                {menuData.empresas.ativo} / {menuData.empresas.inativo}
-                            </div>
-                        </>
-                    }
+            {temAcesso(["Diretoria", "Coordenador","Assistente"]) ?                    
+                <div className="box col-md-5 col-xs-12 mt-3 m-auto shadow">
+                    <div className='text-center'>
+                        <div className='fs-5 border-bottom'>Empresas</div>
+                        {loading ?
+                            <Loading className="rounded-bottom" />
+                            :
+                            <>
+                                <div>Ativas / Inativas</div>
+                                <div className="fs-4 text-primary">
+                                    {menuData.empresas.ativo} / {menuData.empresas.inativo}
+                                </div>
+                            </>
+                        }
+                    </div>
                 </div>
-            </div>
-            {temAcesso(["Diretoria", "Coordenador"]) ?
+            :null}
 
+            {temAcesso(["Diretoria", "Coordenador"]) ?
                 <div className='box col-md-5 col-xs-12 mt-3 shadow m-auto'>
                     <div className='text-center'>
                         <div className='fs-5 border-bottom'>Valor Recebido</div>
@@ -95,7 +96,7 @@ const Home = () => {
                         }
                     </div>
                 </div>
-                : null}
+            : null}
         </div>
     );
 }
