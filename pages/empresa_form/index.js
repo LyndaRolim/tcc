@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { UserContext } from '../../Contexts/UserContext/UserContext';
 
 const CadastroEmpresas = () => {
     const navigate = useRouter().push;
@@ -10,7 +11,13 @@ const CadastroEmpresas = () => {
     const [email, setEmail] = useState("");
     const [telefone, setTelefone] = useState("");
     const [obs, setObs] = useState("");
+    const { validaAcesso } = useContext(UserContext);
 
+    useEffect(() => {
+        Salvar(); 
+        validaAcesso(["Diretoria", "Coordenador", "Assistente"]);
+    },[])
+    
     function Salvar(){
         if(temErro() !== ""){
             toast(temErro(), {

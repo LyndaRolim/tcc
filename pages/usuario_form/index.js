@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { UserContext } from '../../Contexts/UserContext/UserContext';
 
 const CadastroUsuario = () => {
     const navigate = useRouter().push;
@@ -12,6 +13,13 @@ const CadastroUsuario = () => {
     const [acessoAtual, setAcessoAtual] = useState("");
     const acesso = ["Diretoria", "Coordenador", "Recrutador", "Assistente"];
     console.log(acessoAtual)
+    const { validaAcesso } = useContext(UserContext);
+
+    useEffect(() => {
+        Salvar(); 
+        validaAcesso(["Diretoria", "Coordenador", "Assistente"]);
+    },[])
+
     function Salvar() {
         if (temErro() !== "") {
             toast(temErro(), {

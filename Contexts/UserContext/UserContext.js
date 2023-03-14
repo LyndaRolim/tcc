@@ -47,7 +47,7 @@ export const UserContextProvider = ({ children }) => {
     return (
         <UserContext.Provider
             value={{
-                usuario, setUsuario, validaAcesso,
+                usuario, setUsuario, validaAcesso,temAcesso,
                 routeActive, setRouteActive
             }}>
             {children}

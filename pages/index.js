@@ -34,6 +34,7 @@ export default function Login() {
 
         if (!erro) {
             const data = { email, senha };
+            let err=''
             toast.promise(
                 axios.post("/api/login", data)
                     .then(r => r.data)
@@ -41,19 +42,19 @@ export default function Login() {
                         if (data !== "" && data !== null) {
                             window.localStorage.setItem("user", JSON.stringify(data));
                             setUsuario(data)
-                        }
+                            toast.success('Usuário encontrado.')
+                        navigate("/home");
+                    }
+                    })
+                    .catch(e=>{
+                        console.log(e)
+                        toast.error(e.response.data.erro)
+
                     })
 
                 , {
-                    pending: "Enviando dados...",
-                    success: "Usuário encontrado.",
-                    error: "Usuário não encontrado."
-                })
-                .then(() => {
-                    setTimeout(() => {
-                        navigate("/home");
-                    }, 500);
-
+                    pending: "Enviando dados..."
+                    
                 })
         }
     }
