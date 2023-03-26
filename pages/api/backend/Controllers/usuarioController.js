@@ -23,9 +23,10 @@ exports.login = async (req,res) => {
 
 exports.post = async (req,res) => {
     try {
-        req.body.senha=md5(req.body.senha);
+        const senha = gerarSenha(8)
+        req.body.senha=md5(senha);
         const usuario = await Usuario.create(req.body);
-        return res.status(200).send({ usuario });
+        return res.status(200).json( senha );
     }catch(err){
         return res.status(400).send({erro: ''+err });
     }
@@ -78,3 +79,13 @@ exports.delete = async (req,res) => {
         return res.status(400).send({erro: ''+err });
     }
 }
+
+
+function gerarSenha(tamanho) {
+    var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var senha = "";
+    for (var i = 0; i < tamanho; i++) {
+      senha += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+    return senha;
+  }

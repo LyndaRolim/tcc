@@ -7,8 +7,6 @@ import { UserContext } from '../../Contexts/UserContext/UserContext';
 const CadastroUsuario = () => {
     const navigate = useRouter().push;
     const [nome, setNome] = useState("");
-    const [senha, setSenha] = useState("");
-    const [senha_repetida, setSenhaRepetida] = useState("");
     const [email, setEmail] = useState("");
     const [acessoAtual, setAcessoAtual] = useState("");
     const acesso = ["Diretoria", "Coordenador", "Recrutador", "Assistente"];
@@ -20,18 +18,22 @@ const CadastroUsuario = () => {
         validaAcesso(["Diretoria", "Coordenador", "Assistente"]);
     },[])
 
-    function Salvar() {
+    async function Salvar() {
         if (temErro() !== "") {
             toast(temErro(), {
                 type: 'error'
             });
         } else {
-            toast.promise(
+            await toast.promise(
                 axios.post("/api/usuario", {
                     nome: nome,
-                    senha: senha,
                     email: email,
                     acesso: acessoAtual
+                }).then(r =>{
+                    axios.post('/api/email/senhaUsuario',{
+                        email: email,
+                        senha: r.data
+                    })
                 })
                 , {
                     pending: "Enviado informações.",
@@ -39,6 +41,7 @@ const CadastroUsuario = () => {
                     success: "Usuário salvo."
                 })
                 .then(() => setTimeout(() => {
+                    
                     navigate("/usuarios")
                 }, 500));
         }
@@ -55,17 +58,6 @@ const CadastroUsuario = () => {
         }
         if (email === "") {
             erro += "Informe o email. ";
-        }
-        if (senha === "") {
-            erro += "Insira a senha. ";
-        }
-        if (senha_repetida === "") {
-            erro += "Informe a senha repetida. ";
-        }
-        if (senha_repetida !== "" && senha !== "") {
-            if (senha !== senha_repetida) {
-                erro += "As duas senhas devem ser iguais. ";
-            }
         }
         return erro;
     }
@@ -84,15 +76,6 @@ const CadastroUsuario = () => {
                 <div className='col-6'>
                     <label>Email</label>
                     <input value={email} onChange={e => { setEmail(e.target.value) }} type='email' />
-                </div>
-                <div className='col pt-3'>
-                    <label>Senha</label>
-                    <input value={senha} onChange={e => { setSenha(e.target.value) }} type='password' />
-                </div>
-
-                <div className='col pt-3'>
-                    <label>Repita a Senha</label>
-                    <input value={senha_repetida} onChange={e => { setSenhaRepetida(e.target.value) }} type='password' />
                 </div>
 
                 <div className='col pt-3'>

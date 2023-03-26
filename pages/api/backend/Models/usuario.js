@@ -24,8 +24,8 @@ const UsuarioSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    esqueci_senha_token: {
-        type: String,
+    trocar_senha: {
+        type: Boolean,
     },
     acesso:{
         type: String,
