@@ -9,12 +9,13 @@ import { UserContext } from '../../Contexts/UserContext/UserContext';
 const Header = () => {
     const navigate = useRouter().push;
     const { open, setOpen } = useContext(MenuContext);
-    const { usuario, setUsuario } = useContext(UserContext)
+    const { usuario, setUsuario, setToken } = useContext(UserContext)
 
     function logOut() {
         localStorage.clear();
         setOpen(false);
         setUsuario(null);
+        setToken(null);
         navigate("/");
     }
     

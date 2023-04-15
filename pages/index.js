@@ -8,12 +8,13 @@ export default function Login() {
     const navigate = useRouter().push;
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const { setUsuario } = useContext(UserContext);
+    const { setToken, setRouteActive } = useContext(UserContext);
 
     useEffect(() => {
-        if (localStorage.getItem("user") !== "null" && localStorage.getItem("user") !== null) {
-            setUsuario(JSON.parse(localStorage.getItem("user")))
+        if (localStorage.getItem("token") !== "null" && localStorage.getItem("token") !== null && localStorage.getItem("token") !== "") {
+            setToken(localStorage.getItem("token"));
             toast.success("Usuário logado com sucesso.");
+            setRouteActive('/home');
             setTimeout(() => {
                 navigate("/home");
             }, 500);
@@ -34,19 +35,19 @@ export default function Login() {
 
         if (!erro) {
             const data = { email, senha };
-            let err=''
             toast.promise(
                 axios.post("/api/login", data)
                     .then(r => r.data)
                     .then(data => {
                         if (data !== "" && data !== null) {
-                            window.localStorage.setItem("user", JSON.stringify(data));
-                            setUsuario(data)
+                            window.localStorage.setItem("token", data);
+                            setToken(data);
                             toast.success('Usuário encontrado.')
-                        navigate("/home");
-                    }
+                            setRouteActive('/home');
+                            navigate("/home");
+                        }
                     })
-                    .catch(e=>{
+                    .catch(e => {
                         console.log(e)
                         toast.error(e.response.data.erro)
 
@@ -54,7 +55,7 @@ export default function Login() {
 
                 , {
                     pending: "Enviando dados..."
-                    
+
                 })
         }
     }

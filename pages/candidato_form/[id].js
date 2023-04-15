@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import axios from 'axios';
+import axios from '../../config/http';
 import { useRouter } from 'next/router';
 import { FaDownload } from 'react-icons/fa';
 import { UserContext } from '../../Contexts/UserContext/UserContext';

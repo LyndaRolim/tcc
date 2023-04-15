@@ -1,13 +1,8 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { UserContext } from '../../Contexts/UserContext/UserContext';
+import React, {useState } from 'react';
 
 export default function trocarSenha(){
-    const navigate = useRouter().push;
     const [senhaRepetida, setsenhaRepetida] = useState("");
     const [senha, setSenha] = useState("");
-    const { setUsuario } = useContext(UserContext);
     return(
         <div className="row justify-content-center align-item-center">
             <div className='box col-10 col-lg-4 login-box shadow'>

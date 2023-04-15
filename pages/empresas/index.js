@@ -1,6 +1,6 @@
 import { FaArrowUp, FaEdit, FaTrash } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
-import axios from 'axios';
+import axios from '../../config/http';
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { UserContext } from '../../Contexts/UserContext/UserContext';

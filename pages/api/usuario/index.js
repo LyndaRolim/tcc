@@ -1,6 +1,8 @@
 const usuarioController = require('../backend/Controllers/usuarioController');
+const verifyMiddleware = require('../auth/verifyMiddleware');
 
 export default function handler(req, res) {
+    verifyMiddleware.default(req, res);
     const method = req.method;
     if(method === 'GET'){
         return usuarioController.getAll(req, res);

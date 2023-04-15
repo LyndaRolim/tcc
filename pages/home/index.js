@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../config/http';
 import { useContext, useEffect, useState } from 'react';
 import Loading from '../../Components/Loading/Loading';
 import { UserContext } from '../../Contexts/UserContext/UserContext';

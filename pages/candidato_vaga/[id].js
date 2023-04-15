@@ -1,6 +1,6 @@
 import { FaArrowDown, FaArrowUp, FaFilePdf } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
-import axios from 'axios';
+import axios from '../../config/http';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 

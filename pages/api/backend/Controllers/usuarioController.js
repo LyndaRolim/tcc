@@ -1,5 +1,6 @@
 const Usuario = require("../Models/usuario");
 const md5 = require("md5");
+const jsonwebtoken = require("jsonwebtoken");
 
 exports.login = async (req,res) => {
     try{
@@ -9,7 +10,13 @@ exports.login = async (req,res) => {
         });
         if(usuario){
             if (usuario.status){
-                return res.status(200).send(usuario);
+                const data = {
+                    data: usuario,
+                    exp: Math.floor(Date.now() / 1000) + (60*5),
+                    iat: Math.floor(Date.now() / 1000)
+                }
+                const token = jsonwebtoken.sign(data,process.env.JWT_SECRET_KEY);
+                return res.status(200).send(token);
             }else{
                 return res.status(400).send({erro: "Usuário inativo."});
             }
