@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { UserContext } from '../Contexts/UserContext/UserContext';
+const md5 = require("md5");
 
 export default function Login() {
     const navigate = useRouter().push;
@@ -40,17 +41,20 @@ export default function Login() {
                     .then(r => r.data)
                     .then(data => {
                         if (data !== "" && data !== null) {
-                            window.localStorage.setItem("token", data);
-                            setToken(data);
-                            toast.success('Usuário encontrado.')
-                            setRouteActive('/home');
-                            navigate("/home");
+                            if(data==='TROCAR SENHA'){
+                                navigate("/trocar_senha/"+md5(email));
+                            }else{
+                                window.localStorage.setItem("token", data);
+                                setToken(data);
+                                toast.success('Usuário encontrado.')
+                                setRouteActive('/home');
+                                navigate("/home");
+                            }
                         }
                     })
                     .catch(e => {
                         console.log(e)
                         toast.error(e.response.data.erro)
-
                     })
 
                 , {
@@ -75,6 +79,9 @@ export default function Login() {
                     <div className='col-8 pt-3'>
                         <label>Senha</label>
                         <input value={senha} onChange={e => setSenha(e.target.value)} type='password' />
+                    </div>
+                    <div className='col-8 pt-3 text-end'>
+                        <a onClick={()=>{navigate('/esqueci_senha')}}>Esqueci a senha</a>
                     </div>
                 </div>
                 <div className='box-footer'>

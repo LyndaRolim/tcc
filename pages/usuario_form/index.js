@@ -10,11 +10,9 @@ const CadastroUsuario = () => {
     const [email, setEmail] = useState("");
     const [acessoAtual, setAcessoAtual] = useState("");
     const acesso = ["Diretoria", "Coordenador", "Recrutador", "Assistente"];
-    console.log(acessoAtual)
     const { validaAcesso } = useContext(UserContext);
 
-    useEffect(() => {
-        Salvar(); 
+    useEffect(() => { 
         validaAcesso(["Diretoria", "Coordenador", "Assistente"]);
     },[])
 

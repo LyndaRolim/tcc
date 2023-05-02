@@ -10,13 +10,17 @@ exports.login = async (req,res) => {
         });
         if(usuario){
             if (usuario.status){
-                const data = {
-                    data: usuario,
-                    exp: Math.floor(Date.now() / 1000) + (60*5),
-                    iat: Math.floor(Date.now() / 1000)
+                if(usuario.trocar_senha){
+                    return res.status(200).send('TROCAR SENHA');
+                }else{
+                    const data = {
+                        data: usuario,
+                        exp: Math.floor(Date.now() / 1000) + (60*5),
+                        iat: Math.floor(Date.now() / 1000)
+                    }
+                    const token = jsonwebtoken.sign(data,process.env.JWT_SECRET_KEY);
+                    return res.status(200).send(token);
                 }
-                const token = jsonwebtoken.sign(data,process.env.JWT_SECRET_KEY);
-                return res.status(200).send(token);
             }else{
                 return res.status(400).send({erro: "Usuário inativo."});
             }
@@ -32,6 +36,7 @@ exports.post = async (req,res) => {
     try {
         const senha = gerarSenha(8)
         req.body.senha=md5(senha);
+        req.body.trocar_senha = true;
         const usuario = await Usuario.create(req.body);
         return res.status(200).json( senha );
     }catch(err){
@@ -87,6 +92,25 @@ exports.delete = async (req,res) => {
     }
 }
 
+exports.recuperarSenha = async (email,senha) => {
+    let usuario = await Usuario.findOne({"email":email})
+    if(usuario){
+        await Usuario.findByIdAndUpdate(usuario._id, { senha: md5(senha), trocar_senha: true });
+        return '';
+    }else{
+        return 'Usuário não encontrado.'
+    }
+}
+
+exports.alterarSenha = async(email,senha) => {
+    let usuarios = await Usuario.find({status: true, trocar_senha: true});
+
+    usuarios.map(async (usuario) => {
+        if(md5(usuario.email) === email){
+            await Usuario.findByIdAndUpdate(usuario._id, {senha: md5(senha), trocar_senha: false})
+        }
+    });
+}
 
 function gerarSenha(tamanho) {
     var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

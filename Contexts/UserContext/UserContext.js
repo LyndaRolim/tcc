@@ -69,11 +69,11 @@ export const UserContextProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        if (routeActive !== '/') {
+        if (navigate.pathname !== '/' && navigate.pathname.indexOf('/esqueci_senha') < 0 && navigate.pathname.indexOf('/trocar_senha') < 0 ) {
             verifyToken();
             getUserByToken();
         }
-    }, [routeActive]);
+    }, [navigate.pathname]);
 
     return (
         <UserContext.Provider
