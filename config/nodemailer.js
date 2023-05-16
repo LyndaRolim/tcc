@@ -3,11 +3,11 @@ let nodemailer = require('nodemailer');
 export const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'alemaorolim@gmail.com',
-        pass: 'jtqkzeiyjwgtawmi'
+        user: 'lyndachrystine@gmail.com',
+        pass: 'mxqfuahjbmurdlec'
     }
 });
 
 export const mailOptions = {
-    from: 'alemaorolim@gmail.com'
+    from: 'lyndachrystine@gmail.com'
 }

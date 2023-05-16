@@ -1,10 +1,20 @@
 import {transporter,mailOptions} from "../../../config/nodemailer";
 const usuarioController = require('../backend/Controllers/usuarioController');
+const HTML = `
+        <html>
+            <h1>Prezado,</b></h1>
+            <h1>Sua solicitação de alteração de senha foi realizada com sucesso</b></h1>
+            <h1>Sua nova senha é:
+    `;
+const HTML2 = `</b></h1>
+        <h1>Caso não tenha solicitado essa alteração, por favor, contate a equipe de TI o mais breve possível.</b></h1>
+        </html>`;
+
 
 export default async function post(req,res,next){
     const senha = gerarSenha(8);
     const email = req.body.email;
-    
+
     let erro = await usuarioController.recuperarSenha(email,senha)
 
     if(erro === ''){
@@ -12,7 +22,7 @@ export default async function post(req,res,next){
             ...mailOptions,
             "to":email,
             "subject":"Senha resetada",
-            "text":'Senha: '+ senha
+            "html": HTML + senha + HTML2
         });
     }
 
