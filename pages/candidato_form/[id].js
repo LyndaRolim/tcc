@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import axios from '../../config/http';
+import Axios from '../../config/http';
 import { useRouter } from 'next/router';
 import { FaDownload } from 'react-icons/fa';
 import { UserContext } from '../../Contexts/UserContext/UserContext';
+import axios from 'axios';
 
 const CadastroCandidatos = () => {
     const navigate = useRouter().push;
@@ -28,7 +29,7 @@ const CadastroCandidatos = () => {
 
     function carregaCandidato(){
         if(id){
-            axios.get("/api/candidato/"+id)
+            Axios.get("/api/candidato/"+id)
                 .then(r => r.data)
                 .then(data => data.candidatos)
                 .then(candidato => {
@@ -68,7 +69,7 @@ const CadastroCandidatos = () => {
 
             if(id){
                 toast.promise(
-                    axios.put("/api/candidato/"+id,{
+                    Axios.put("/api/candidato/"+id,{
                         id: id,
                         nome: nome,
                         formacao: formacao,
