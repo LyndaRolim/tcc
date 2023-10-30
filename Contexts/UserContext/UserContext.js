@@ -24,8 +24,8 @@ export const UserContextProvider = ({ children }) => {
 
         if (erro) {
             toast.error("Acesso não autorizado.")
-            setRouteActive("/home");
-            navigate.push("/home");
+            setRouteActive("/");
+            navigate.push("/");
         }
     }
 
